@@ -1,5 +1,5 @@
 build:
-	@g++ -o main main.cpp
+	@g++ -o main.o main.cpp file.cpp utils.cpp
 
 run:
-	./main data
+	./main.o
