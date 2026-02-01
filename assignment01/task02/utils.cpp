@@ -2,11 +2,17 @@
 #include<string>
 #include<iostream>
 
-int** createMatrix(int size) {
+int** allocateMatrix(int size) {
     int** matrix = new int*[size];
     for (int i = 0; i < size; i++) {
         matrix[i] = new int[size];
     }
+
+    return matrix;
+}
+
+int** createMatrix(int size) {
+    int** matrix = allocateMatrix(size);
 
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -18,10 +24,7 @@ int** createMatrix(int size) {
 }
 
 int** createMatrix(int* inputData, int size) {
-    int** matrix = new int*[size];
-    for (int i = 0; i < size; i++) {
-        matrix[i] = new int[size];
-    }
+    int** matrix = allocateMatrix(size);
 
     int index = 0;
 
@@ -48,6 +51,17 @@ int* extractInputData(string inputData, int size) {
         }
         temp *= 10;
         temp += (static_cast<int>(inputData[i]) - '0');
+    }
+
+    return array;
+}
+
+int* randomizeArray(int size) {
+    int* array = new int[size];
+
+    // fill array with numbers between 1 and 100 inclusive
+    for (int i = 0; i < size; i++) {
+        array[i] = rand() % 100 + 1;
     }
 
     return array;

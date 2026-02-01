@@ -1,10 +1,10 @@
 #include<iostream>
+#include<ctime>
 #include"file.h"
 #include"utils.h"
 using namespace std;
 
 int main(int argc, char* argv[]) {
-
     string inputPath = "./data/input.txt";
     string outputPath = "./data/output.txt";
 
@@ -27,15 +27,44 @@ int main(int argc, char* argv[]) {
     }
     cout << "==================================\n";
 
-    File* inputFile = new File(inputPath, FileMode::READ);
+    int option = 0;
+    cout << "1. Use the " << inputPath << " file as input.\n";
+    cout << "2. Use a randomly generated array with size N.\n";
+    cout << "Enter anything else to quit.\n";
+    cout << "Choose: ";
+    cin >> option;
+
+    int* inputDataArray1 = NULL;
+    int* inputDataArray2 = NULL;
+    int n = 0;
+
+    if (option == 1) {
+        File* inputFile = new File(inputPath, FileMode::READ);
+
+        string* inputDataString = inputFile->readFile();
+
+        n = static_cast<int>(inputDataString[0][0]) - '0';
+
+        inputDataArray1 = extractInputData(inputDataString[1], n*n);
+        inputDataArray2 = extractInputData(inputDataString[2], n*n);
+
+        delete[] inputDataString;
+        delete inputFile;
+    }
+    else if (option == 2) {
+        srand(time(0));
+        cout << "Enter size N: ";
+        cin >> n;
+        inputDataArray1 = randomizeArray(n*n);
+        inputDataArray2 = randomizeArray(n*n);
+        cout << "Created\n";
+    }
+    else {
+        cout << "Okay! Bye bye!\n";
+        return 0;
+    }
+
     File* outputFile = new File(outputPath, FileMode::WRITE);
-
-    string* inputDataString = inputFile->readFile();
-
-    int n = static_cast<int>(inputDataString[0][0]) - '0';
-
-    int* inputDataArray1 = extractInputData(inputDataString[1], n*n);
-    int* inputDataArray2 = extractInputData(inputDataString[2], n*n);
 
     int** A = createMatrix(inputDataArray1, n);
     int** B = createMatrix(inputDataArray2, n);
@@ -70,8 +99,6 @@ int main(int argc, char* argv[]) {
     delete[] C;
     delete[] inputDataArray1;
     delete[] inputDataArray2;
-    delete[] inputDataString;
     delete outputFile;
-    delete inputFile;
     return 0;
 }
