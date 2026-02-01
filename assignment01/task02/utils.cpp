@@ -2,6 +2,7 @@
 #include<string>
 #include<iostream>
 
+// Create an empty matrix
 int** allocateMatrix(int size) {
     int** matrix = new int*[size];
     for (int i = 0; i < size; i++) {
@@ -11,6 +12,7 @@ int** allocateMatrix(int size) {
     return matrix;
 }
 
+// Create matrix initialized to 0
 int** createMatrix(int size) {
     int** matrix = allocateMatrix(size);
 
@@ -23,6 +25,7 @@ int** createMatrix(int size) {
     return matrix;
 }
 
+// Create a matrix and fill it with the data provided
 int** createMatrix(int* inputData, int size) {
     int** matrix = allocateMatrix(size);
 
@@ -37,6 +40,8 @@ int** createMatrix(int* inputData, int size) {
     return matrix;
 }
 
+// Convert a inputData provided in a string to integer data
+// Returns array of data
 int* extractInputData(string inputData, int size) {
     int* array = new int[size];
     int temp = 0;
@@ -56,6 +61,7 @@ int* extractInputData(string inputData, int size) {
     return array;
 }
 
+// Create an array with random values
 int* randomizeArray(int size) {
     int* array = new int[size];
 

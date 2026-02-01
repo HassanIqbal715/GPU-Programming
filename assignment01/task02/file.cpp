@@ -26,6 +26,7 @@ void File::createFile() {
         bufferIndex++;
     }
 
+    // Create directories if a "slash" was found
     if (latestSlashIndex != -1) {
         buffer[latestSlashIndex] = '\0';
         filesystem::create_directories(buffer);
@@ -33,10 +34,12 @@ void File::createFile() {
 
     filesystem::path filePath = path;
 
+    // Create the file
     ofstream f(filePath);
     if (f.is_open()) f.close();
 }
 
+// Opens file for the stored open mode. Returns true on open and false on error
 bool File::openFile() {
     if (file.is_open()) {
         return true;
@@ -59,6 +62,7 @@ bool File::openFile() {
     return file.is_open();
 }
 
+// Write the line provided. Reset the writing pointer to the beginning if pointerReset is true
 void File::writeFile(string line, bool pointerReset = false) {
     if (!openFile() || openMode == FileMode::READ) return;
 
@@ -70,6 +74,7 @@ void File::writeFile(string line, bool pointerReset = false) {
     file << line << endl;
 }
 
+// Read the file line by line. Return a string pointer with all the data.
 string* File::readFile() {
     if (!openFile() || openMode == FileMode::WRITE) return nullptr;
 
