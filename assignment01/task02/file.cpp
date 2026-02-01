@@ -18,7 +18,7 @@ void File::createFile() {
     int latestSlashIndex = -1;
 
     // finding and putting directory and file names in the buffer
-    for (int i = 0; i < path.length(); i++) {
+    for (unsigned long i = 0; i < path.length(); i++) {
         if (path[i] == '/' || path[i] == '\\')
             latestSlashIndex = bufferIndex;
 

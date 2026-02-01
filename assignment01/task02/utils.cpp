@@ -8,8 +8,6 @@ int** createMatrix(int size) {
         matrix[i] = new int[size];
     }
 
-    int index = 0;
-
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             matrix[i][j] = 0;
@@ -41,7 +39,7 @@ int* extractInputData(string inputData, int size) {
     int temp = 0;
     int index = 0;
 
-    for (int i = 0; i < inputData.length() + 1; i++) {
+    for (unsigned long i = 0; i < inputData.length() + 1; i++) {
         if (inputData[i] == ' ' || inputData[i] == '\0' || inputData[i] == '\n') {
             array[index++] = temp;
 
