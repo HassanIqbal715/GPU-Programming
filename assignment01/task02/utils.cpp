@@ -3,21 +3,21 @@
 #include<iostream>
 
 // Create an empty matrix
-int** allocateMatrix(int size) {
-    int** matrix = new int*[size];
-    for (int i = 0; i < size; i++) {
-        matrix[i] = new int[size];
+int** allocateMatrix(int rows, int columns) {
+    int** matrix = new int*[rows];
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = new int[columns];
     }
 
     return matrix;
 }
 
 // Create matrix initialized to 0
-int** createMatrix(int size) {
-    int** matrix = allocateMatrix(size);
+int** createMatrix(int rows, int columns) {
+    int** matrix = allocateMatrix(rows, columns);
 
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
             matrix[i][j] = 0;
         }
     }
@@ -26,13 +26,13 @@ int** createMatrix(int size) {
 }
 
 // Create a matrix and fill it with the data provided
-int** createMatrix(int* inputData, int size) {
-    int** matrix = allocateMatrix(size);
+int** createMatrix(vector<int> inputData, int rows, int columns) {
+    int** matrix = allocateMatrix(rows, columns);
 
     int index = 0;
 
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
             matrix[i][j] = inputData[index++];
         }
     }
@@ -42,14 +42,13 @@ int** createMatrix(int* inputData, int size) {
 
 // Convert a inputData provided in a string to integer data
 // Returns array of data
-int* extractInputData(string inputData, int size) {
-    int* array = new int[size];
+vector<int> extractInputData(string inputData, int rows, int columns) {
+    vector<int> array;
     int temp = 0;
-    int index = 0;
 
     for (unsigned long i = 0; i < inputData.length() + 1; i++) {
-        if (inputData[i] == ' ' || inputData[i] == '\0' || inputData[i] == '\n') {
-            array[index++] = temp;
+        if (inputData[i] == ' ' || inputData[i] == '\0' || inputData[i] == '\n' || inputData[i] == '\r') {
+            array.push_back(temp);
 
             temp = 0;
             continue;
@@ -62,12 +61,12 @@ int* extractInputData(string inputData, int size) {
 }
 
 // Create an array with random values
-int* randomizeArray(int size) {
-    int* array = new int[size];
+vector<int> randomizeArray(int rows, int columns) {
+    vector<int> array;
 
     // fill array with numbers between 1 and 100 inclusive
-    for (int i = 0; i < size; i++) {
-        array[i] = rand() % 100 + 1;
+    for (int i = 0; i < rows*columns; i++) {
+        array.push_back(rand() % 100 + 1);
     }
 
     return array;

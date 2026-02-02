@@ -1,6 +1,7 @@
 #pragma once
 #include<fstream>
 #include<string>
+#include<vector>
 using namespace std;
 
 enum FileMode {READ, WRITE, READ_WRITE};
@@ -17,6 +18,6 @@ public:
     void createFile();
     bool openFile();
     void writeFile(string line, bool pointerReset);
-    string* readFile();
+    vector<string> readFile();
     ~File();
 };

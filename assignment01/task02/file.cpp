@@ -75,19 +75,18 @@ void File::writeFile(string line, bool pointerReset = false) {
 }
 
 // Read the file line by line. Return a string pointer with all the data.
-string* File::readFile() {
-    if (!openFile() || openMode == FileMode::WRITE) return nullptr;
+vector<string> File::readFile() {
+    if (!openFile() || openMode == FileMode::WRITE) return {};
 
     file.seekp(0, ios_base::beg);
 
     string line;
-    string* data = new string[500];
-    int index = 0;
+    vector<string> data;
+
     while(getline(file, line)) {
-        data[index++] = line;
+        data.push_back(line);
     }
 
-    data[index] = '\0';
     return data;
 }
 
