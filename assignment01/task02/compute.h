@@ -1,0 +1,1 @@
+void cpuSum(int *&result, int *A, int rows, int columns);
