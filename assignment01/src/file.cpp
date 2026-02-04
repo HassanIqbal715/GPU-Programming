@@ -63,7 +63,7 @@ bool File::openFile() {
 }
 
 // Write the line provided. Reset the writing pointer to the beginning if pointerReset is true
-void File::writeFile(string line, bool pointerReset = false) {
+void File::writeFile(string line, bool pointerReset) {
     if (!openFile() || openMode == FileMode::READ) return;
 
     file.clear(); // reset the flags

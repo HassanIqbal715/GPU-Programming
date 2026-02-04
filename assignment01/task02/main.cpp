@@ -1,8 +1,8 @@
 #include "../include/file.h"
 #include "../include/utils.h"
 #include "compute.h"
-#include <ctime>
 #include <iostream>
+#include <chrono>
 #include <vector>
 using namespace std;
 
@@ -68,13 +68,21 @@ int main(int argc, char *argv[]) {
 
     int *C = createMatrix(rows, columns);
 
+    chrono::steady_clock::time_point startTimePoint = chrono::steady_clock::now();
     // Compute the sum and store it in an empty matrix C
     for (int i = 0; i < n; i++) {
         cpuSum(C, inputDataMatrices[i], rows, columns);
     }
+    chrono::steady_clock::time_point endTimePoint = chrono::steady_clock::now();
+
+    chrono::microseconds duration = chrono::duration_cast<chrono::microseconds>(endTimePoint - startTimePoint);
+
+    cout << "Execution Time: ";
+    cout << static_cast<double>(duration.count()) / 1000000;
+    cout << "seconds" << endl;
 
     // Write the result to the output file
-    writeMatrix(C, rows, columns, outputFile);
+    writeMatrix(C, n, rows, columns, outputFile);
     cout << "Successfully written output to: " << outputPath << endl;
 
     // Clear allocated memory

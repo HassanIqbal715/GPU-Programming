@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 # Default values in case of no arguments
-n = 10
+n = 2
 rows = 100
 cols = 100
 

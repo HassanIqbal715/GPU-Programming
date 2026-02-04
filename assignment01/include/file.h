@@ -17,7 +17,7 @@ public:
     File(string path, FileMode openMode);
     void createFile();
     bool openFile();
-    void writeFile(string line, bool pointerReset);
+    void writeFile(string line, bool pointerReset = false);
     vector<string> readFile();
     ~File();
 };
