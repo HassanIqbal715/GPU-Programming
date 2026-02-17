@@ -1,6 +1,7 @@
 set(SRCS
     file.cpp
     utils.cpp
+    matrix.cpp
 )
 
 add_library(library ${SRCS})
