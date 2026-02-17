@@ -1,1 +1,3 @@
-void cpuMul(double *&result, int *A, int* B, int rows, int middle, int columns);
+#include "matrix.h"
+
+void cpuMul(Matrix &result, Matrix &A, Matrix &B);
