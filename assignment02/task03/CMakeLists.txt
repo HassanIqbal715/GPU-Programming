@@ -12,6 +12,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/../src ${CMAKE_SOURCE_DIR}/build/src)
 
-add_executable(main.o main.cu compute.cu)
+add_executable(main main.cu compute.cu)
 
-target_link_libraries(main.o PRIVATE library)
+target_link_libraries(main PRIVATE library)
