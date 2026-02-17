@@ -45,7 +45,7 @@ void gpuMul(Matrix &result, Matrix &A, Matrix &B,
      * thread.
      */
 
-    dim3 blockDim(16, 16, 1);
+    dim3 blockDim(16, 8, 1);
     dim3 gridDim(
         ceil((double) result.cols / blockDim.x), 
         ceil((double) result.rows / blockDim.y),
