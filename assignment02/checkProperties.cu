@@ -15,8 +15,8 @@ int main() {
         cout << "Threads per SM: " << devProp.maxThreadsPerMultiProcessor << "\n";
         cout << "Warps per SM: " << devProp.maxThreadsPerMultiProcessor / devProp.warpSize << "\n";
         cout << "Registers per SM: " << devProp.regsPerMultiprocessor << "\n";
-        cout << "Shared Memory per SM: " << devProp.sharedMemPerMultiprocessor << "\n";
-        cout << "Shared Memory per block: " << devProp.sharedMemPerBlock << "\n";
+        cout << "Shared Memory per SM: " << (double) devProp.sharedMemPerMultiprocessor / 1024.0 << "KB\n";
+        cout << "Shared Memory per block: " << (double) devProp.sharedMemPerBlock / 1024.0 << "KB\n";
         cout << "Clock rate: " << (double) devProp.clockRate / 1000000.0 << "GHz\n";
         cout << "Registers per block: " << devProp.regsPerBlock << "\n";
         cout << "Warp size: " << devProp.warpSize << "\n";
