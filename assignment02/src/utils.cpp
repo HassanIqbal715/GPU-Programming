@@ -3,26 +3,25 @@
 #include <string>
 
 // Create matrix initialized to 0
-double *createMatrix(int rows, int columns) {
-    double *matrix = new double [rows * columns];
+void createMatrix(Matrix &mat, int rows, int columns) {
+    mat.free();
+    mat.data = new double [rows * columns];
+    mat.rows = rows;
+    mat.cols = columns;
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            matrix[i * columns + j] = 0;
-        }
+    for (int i = 0; i < rows * columns; i++) {
+        mat.data[i] = 0.0;
     }
-
-    return matrix;
 }
 
 // Convert a inputData provided in a string to integer data
 // Returns array of data
-int* extractInputData(string inputData, int rows, int columns) {
-    int* array = new int[rows * columns];
+double* extractInputData(string inputData, int rows, int columns) {
+    double* array = new double[rows * columns];
     int index = 0;
     int temp = 0;
 
-    for (unsigned int i = 0; i < inputData.length() + 1; i++) {
+    for (long unsigned int i = 0; i < inputData.length() + 1; i++) {
         if (inputData[i] == ' ' || inputData[i] == '\0' ||
             inputData[i] == '\n' || inputData[i] == '\r') {
             array[index++] = temp;
@@ -38,25 +37,27 @@ int* extractInputData(string inputData, int rows, int columns) {
 }
 
 // Write matrix to a file
-void writeMatrix(double *&matrix, int n, int rows, int columns, File *&targetFile) {
+void writeMatrix(Matrix &mat, string &outputPath) {
     // Prepare text for writing and write it to the outputFile.
     string buffer;
+    File *outputFile = new File(outputPath, FileMode::WRITE);
 
-    targetFile->writeFile(to_string(n));
-    targetFile->writeFile(to_string(rows) + " " + to_string(columns));
-    for (int i = 0; i < rows * columns; i++) {
-        buffer.append(to_string(matrix[i]));
+    outputFile->writeFile(to_string(mat.rows) + " " + to_string(mat.cols));
+    for (int i = 0; i < mat.rows * mat.cols; i++) {
+        buffer.append(to_string(mat.data[i]));
         buffer.append(" ");
     }
-    targetFile->writeFile(buffer, false);
+
+    outputFile->writeFile(buffer, false);
     buffer.clear(); // empty buffer string/text
+
+    delete outputFile;
 }
 
 void handleArguments(string& inputPath, string& outputPath, int argc, char* argv[]) {
-    cout << "==================================\n";
     if (argc <= 1) {
         // No arguments
-        cerr << "Warning: I/O files not provided. Using the default paths\n";
+        cout << "Warning: I/O files not provided. Using the default paths\n\n";
         cout << "Input file path: " << inputPath << endl;
         cout << "Output file path: " << outputPath << endl;
     } 
@@ -74,5 +75,47 @@ void handleArguments(string& inputPath, string& outputPath, int argc, char* argv
         cout << "Input path set: " << inputPath << endl;
         cout << "Output path set: " << outputPath << endl;
     }
-    cout << "==================================\n";
+}
+
+vector<Matrix> loadData(string& inputPath) {
+    File *inputFile = new File(inputPath, FileMode::READ);
+
+    vector<string> inputDataString = inputFile->readFile();
+
+    if (inputDataString.size() == 0) {
+        cerr << "Error! Empty input file provided!\n";
+        return {};
+    }
+
+    vector<Matrix> inputDataMatrices;
+
+    double *sizeArray;
+    double *tempArray;
+    
+    // extracting data for matrix 1
+    sizeArray = extractInputData(inputDataString[0], 1, 2);
+    tempArray = extractInputData(inputDataString[1], (int) sizeArray[0], (int) sizeArray[1]);
+    Matrix mat1;
+    mat1.rows = (int) sizeArray[0];
+    mat1.cols = (int) sizeArray[1];
+    mat1.data = tempArray;
+    inputDataMatrices.push_back(mat1);
+    
+    delete[] sizeArray;
+
+    // extracting data for matrix 2
+    sizeArray = extractInputData(inputDataString[2], 1, 2);
+    tempArray = extractInputData(inputDataString[3], sizeArray[0], sizeArray[1]);
+    Matrix mat2;
+    mat2.rows = (int) sizeArray[0];
+    mat2.cols = (int) sizeArray[1];
+    mat2.data = tempArray;
+    inputDataMatrices.push_back(mat2);
+    
+    delete[] sizeArray;
+
+    // Immediately clear the read data because it is of no use anymore.
+    delete inputFile;
+    
+    return inputDataMatrices;
 }
