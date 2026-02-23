@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
     // Read and extract data from inputFile
     vector<Matrix> matrices = loadData(inputPath);
 
+    cout << "Matrices loaded\n";
+    
     if (matrices.size() < 2) {
         cerr << "Error: File not compatible or empty\n";
         return 1;
